@@ -1,0 +1,10 @@
+{% extends 'Post/base.html' %}
+{% block content %}
+
+<a href="{% url 'add-Post' %}">create a post </a>
+<div>
+{% for post in posts %}
+<li><a href="{% url 'detail' post.id %}">{{post}} </a></li><a href="{% url 'delete-Post' post.id%}"> delete</a> -- <a href="{% url 'update-Post' post.id%}"> update</a>
+{% endfor %}
+</div>
+{% endblock%}
