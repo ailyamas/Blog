@@ -1,13 +1,25 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, Category
 from .forms import PostForm
+from django.db.models import Q
+
 # Create your views here.
 def index (request):
-    posts = Post.objects.all()
+    q = request.GET.get('q')     if request.GET.get('q') != None else ' '
+    posts = Post.objects.filter(Q(category__name__icontains= q) |
+                    Q(title__icontains=q) |
+                     Q(description__icontains=q) )
+    categories = Category.objects.all()
+    posts_count = posts.count()
     context = {
-        'posts':posts
+        'posts':posts,
+        'categories':categories,
+        'posts_count':posts_count
+        
     }
     return render(request, 'Post/index.html', context )
+
+    
 
 def detail(request, pk):
     post=Post.objects.get(id=pk)
@@ -47,3 +59,5 @@ def deletePost(request,pk):
         post.delete()
         return redirect('index')
     return render(request, 'Post/delete_post.html', {'obj':post})
+
+
