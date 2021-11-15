@@ -1,0 +1,13 @@
+{% extends 'Post/base.html' %}
+{% block navbar%}
+<div class="col-lg-12 detail-separator">
+    <form class="col-md-6 col-md-offset-3 text-center" action="{% url 'index' %}" method="GET" accept-charset="utf-8">
+      <div class="form-group">
+        <label for="searchForm">Chercher un post </label>
+        <input id="searchForm" class="form-control" name="q">
+      </div>
+      <input type="submit" value="search">
+      
+    </form>
+  </div>
+{% endblock %}

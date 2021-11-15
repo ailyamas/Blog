@@ -1,10 +1,30 @@
 {% extends 'Post/base.html' %}
 {% block content %}
+<style>
+    .home-container{
+        display:grid;
+        grid-template-columns: 1fr 3fr;
+    }
+</style>
+<div> {% include 'Post/nav_bar.html'  %}</div>
+<hr>
+<div class="home-container">
+    <div> 
+       
+        <h3>Categories</h3>
+        {% for category in categories%}
+        <a href="{% url 'index' %}?q={{category.name}}">{{category.name }}</a><br/>
+        {% endfor%}
+    </div>
+    <div>
+        <a href="{% url 'add-Post' %}">create a post </a>
+     <hr>
+     {{posts_count}} posts founded
+      {% for post in posts %}
+      <li><a href="{% url 'detail' post.id %}">{{post}} </a></li><a href="{% url 'delete-Post' post.id%}"> delete</a> -- <a href="{% url 'update-Post' post.id%}"> update</a>
+     {% endfor %}
+     
+    </div>
 
-<a href="{% url 'add-Post' %}">create a post </a>
-<div>
-{% for post in posts %}
-<li><a href="{% url 'detail' post.id %}">{{post}} </a></li><a href="{% url 'delete-Post' post.id%}"> delete</a> -- <a href="{% url 'update-Post' post.id%}"> update</a>
-{% endfor %}
 </div>
 {% endblock%}
